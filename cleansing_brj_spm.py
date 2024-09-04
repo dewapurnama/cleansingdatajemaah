@@ -43,7 +43,7 @@ def extract_number(text):
         return None
 
 # Apply the function to the DataFrame
-df_brj["parsing_deskripsi"] = df_brj["description"].apply(extract_number)
+df_brj['parsing_deskripsi'] = df_brj['description'].apply(extract_number)
 
 
 # In[7]
