@@ -33,7 +33,7 @@ if spm_file is not None:
 # Function to extract the shortest sequence of 9 or more digits
 def extract_number(text):
     # Ensure the input is a string
-   text = str(text)
+    text = str(text)
     # Find all sequences of 9 or more digits
     matches = re.findall(r'\d{9,}', text)
     if matches:
