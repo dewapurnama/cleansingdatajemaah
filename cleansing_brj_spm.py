@@ -19,7 +19,7 @@ st.title('Cleansing Data Transaksi Jemaah')
 # In[3]:
 
 
-df_brj
+#df_brj
 
 
 # In[4]:
