@@ -201,7 +201,7 @@ df_brj
 # Perform the merge
 #merged_df1 = filtered_df_brj.merge(df_spm, left_on='parsing_deskripsi', right_on='no_validasi', how='inner')
 # Perform the merge
-merged_df2 = filtered_df_brj.merge(df_spm, left_on='parsing_deskripsi', right_on='no_porsi', how='inner')
+#merged_df2 = filtered_df_brj.merge(df_spm, left_on='parsing_deskripsi', right_on='no_porsi', how='inner')
 # Perform the merge
 #merged_df3 = filtered_df_brj.merge(df_spm, left_on='parsing_deskripsi', right_on='no_rekening', how='inner')
 # Perform the merge
@@ -241,11 +241,11 @@ merged_df2 = filtered_df_brj.merge(df_spm, left_on='parsing_deskripsi', right_on
 #df_spm_not_in_filtered_df_brj2 = df_spm_not_in_filtered_df_brj2.drop(columns=['_merge'])
 
 # Perform an outer merge
-merged_df9 = filtered_df_brj.merge(df_spm, left_on='nomrek_lawan_asli_updated', right_on='no_rekening', how='outer', indicator=True)
+#merged_df9 = filtered_df_brj.merge(df_spm, left_on='nomrek_lawan_asli_updated', right_on='no_rekening', how='outer', indicator=True)
 # Filter to keep only rows from df_spm that do not have a match in filtered_df_brj
-df_spm_not_in_filtered_df_brj3 = merged_df9[merged_df9['_merge'] == 'right_only']
+#df_spm_not_in_filtered_df_brj3 = merged_df9[merged_df9['_merge'] == 'right_only']
 # Optionally drop the _merge column if you don't need it
-df_spm_not_in_filtered_df_brj3 = df_spm_not_in_filtered_df_brj3.drop(columns=['_merge'])
+#df_spm_not_in_filtered_df_brj3 = df_spm_not_in_filtered_df_brj3.drop(columns=['_merge'])
 
 # Perform an outer merge
 #merged_df10 = filtered_df_brj.merge(df_spm, left_on='parsing_deskripsi', right_on='no_validasi', how='outer', indicator=True)
@@ -274,8 +274,8 @@ df_spm_not_in_filtered_df_brj3 = df_spm_not_in_filtered_df_brj3.drop(columns=['_
 
 # Assuming your DataFrames are named df1, df2, df3, df4, df5, and df6
 #concatenated_df2 = pd.concat([df_spm_not_in_filtered_df_brj1, df_spm_not_in_filtered_df_brj2, 
-                              df_spm_not_in_filtered_df_brj3, df_spm_not_in_filtered_df_brj4, 
-                              df_spm_not_in_filtered_df_brj5, df_spm_not_in_filtered_df_brj6], ignore_index=True)
+                              #df_spm_not_in_filtered_df_brj3, df_spm_not_in_filtered_df_brj4, 
+                              #df_spm_not_in_filtered_df_brj5, df_spm_not_in_filtered_df_brj6], ignore_index=True)
 #concatenated_df2
 
 
