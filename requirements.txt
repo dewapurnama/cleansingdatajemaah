@@ -2,4 +2,3 @@ streamlit
 pandas
 regex
 numpy
-io
