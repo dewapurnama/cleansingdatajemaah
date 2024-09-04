@@ -31,7 +31,7 @@ df_brj
 # In[5]:
 
 
-df_spm
+#df_spm
 
 
 # In[6]:
