@@ -17,7 +17,7 @@ brj_file = st.file_uploader("Upload File BRJ disini", type=['xls','xlsx'])
 buffer = io.BytesIO()
 if brj_file is not None:
     brj = pd.read_excel(brj_file)
-    st.dataframe(brj.head(100))
+    st.dataframe(brj)
 #df_brj = pd.read_excel('C:/Users/User/Documents/ODP BPKH/OJT/A2/Cleansing BTAW/ibbankreportjournal_2022.xlsx')
 
 
