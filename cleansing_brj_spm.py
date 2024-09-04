@@ -19,16 +19,16 @@ brj_file = st.file_uploader("Upload File BRJ disini", type=['xls','xlsx'])
 buffer = io.BytesIO()
 if brj_file is not None:
     brj = pd.read_excel(brj_file)
+    st.write(f"Menampilkan {min(len(brj), 100)} baris pertama dari total {len(brj)} baris.")
     st.dataframe(brj.head(100))
-    st.write(f"Showing the first {min(len(brj), 100)} rows of a total of {len(brj)} rows.")
 #df_brj = pd.read_excel('C:/Users/User/Documents/ODP BPKH/OJT/A2/Cleansing BTAW/ibbankreportjournal_2022.xlsx')
 
 spm_file = st.file_uploader("Upload File SPM disini", type=['xls','xlsx'])
 buffer = io.BytesIO()
 if spm_file is not None:
     spm = pd.read_excel(spm_file)
+    st.write(f"Menampilkan {min(len(spm), 100)} baris pertama dari total {len(spm)} baris.")
     st.dataframe(spm.head(100))
-    st.write(f"Showing the first {min(len(spm), 100)} rows of a total of {len(spm)} rows.")
 # In[3]:
 
 
