@@ -66,12 +66,11 @@ if spm_file is not None:
     df_spm.loc[:, 'no_validasi'] = df_spm['no_validasi'].apply(modify_value)
 
     # Calculate the sum of nilai_mutasi for C and D
-    grouped = filtered_df_brj.groupby('parsing_deskripsi', as_index=False, include_groups=False).apply(
-        lambda x: pd.Series({
-            'sum_C': x.loc[x['jenis_mutasi'] == 'C', 'nilai_mutasi'].sum(),
-            'sum_D': x.loc[x['jenis_mutasi'] == 'D', 'nilai_mutasi'].sum()
-        })
-    ).reset_index()
+    grouped = filtered_df_brj.groupby('parsing_deskripsi', as_index=False, group_keys=False).apply(
+    lambda x: pd.Series({
+        'sum_C': x.loc[x['jenis_mutasi'] == 'C', 'nilai_mutasi'].sum(),
+        'sum_D': x.loc[x['jenis_mutasi'] == 'D', 'nilai_mutasi'].sum()
+    })).reset_index()
 
     filtered_df_brj = filtered_df_brj.merge(grouped, on='parsing_deskripsi')
     filtered_df_brj['total_mutasi'] = (filtered_df_brj['sum_C'] - filtered_df_brj['sum_D']).abs()
