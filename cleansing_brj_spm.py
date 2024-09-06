@@ -35,16 +35,16 @@ if brj_file is not None:
         val_str = str(val)
     
     # Check if the value has more than 10 digits and begins with '0'
-    if len(val_str) > 10 and val_str.startswith('0'):
-        # Strip leading zeros and ensure it's 10 digits long
-        stripped_val = val_str.lstrip('0')
-        # If stripping leaves it with fewer than 10 digits, add leading zeros
-        if len(stripped_val) <= 10:
-            return stripped_val.zfill(10)
+        if len(val_str) > 10 and val_str.startswith('0'):
+            # Strip leading zeros and ensure it's 10 digits long
+            stripped_val = val_str.lstrip('0')
+            # If stripping leaves it with fewer than 10 digits, add leading zeros
+            if len(stripped_val) <= 10:
+                return stripped_val.zfill(10)
+            else:
+                return stripped_val
         else:
-            return stripped_val
-    else:
-        return val_str
+            return val_str
 
 
     df_brj.loc[:, 'parsing_deskripsi'] = df_brj['parsing_deskripsi'].apply(modify_value)
