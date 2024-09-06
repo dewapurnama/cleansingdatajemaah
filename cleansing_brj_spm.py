@@ -33,7 +33,7 @@ if brj_file is not None:
     # Modify values
     def modify_value(val):
     # Convert to string to handle leading zeros
-    val_str = str(val)
+        val_str = str(val)
     
     # Check if the value has more than 10 digits and begins with '0'
     if len(val_str) > 10 and val_str.startswith('0'):
