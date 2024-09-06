@@ -117,7 +117,7 @@ if spm_file is not None:
     # Prepare download
     buffer = io.BytesIO()
     with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-        result2.to_excel(writer, sheet_name='Sheet1', index=False)
+        result.to_excel(writer, sheet_name='Sheet1', index=False)
         writer.close()
 
     st.write(f"Download data yang sudah dicleansing di bawah ini")
