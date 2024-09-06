@@ -30,10 +30,9 @@ if brj_file is not None:
     # Add '0' in front if the number has 9 digits
     df_brj.loc[:, 'nomrek_lawan_asli_updated'] = df_brj['nomrek_lawan_asli'].apply(lambda x: f'0{x}' if len(str(x)) == 9 else str(x))
 
-    # Modify values
     def modify_value(val):
     # Convert to string to handle leading zeros
-        val_str = str(val)
+    val_str = str(val)
     
     # Check if the value has more than 10 digits and begins with '0'
     if len(val_str) > 10 and val_str.startswith('0'):
@@ -46,6 +45,7 @@ if brj_file is not None:
             return stripped_val
     else:
         return val_str
+
 
     df_brj.loc[:, 'parsing_deskripsi'] = df_brj['parsing_deskripsi'].apply(modify_value)
 
