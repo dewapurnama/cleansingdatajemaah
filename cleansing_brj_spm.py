@@ -167,17 +167,21 @@ if spm_file is not None:
     # Apply the function to generate saran_perbaikan
     result['saran_perbaikan'] = result.apply(generate_saran_perbaikan, axis=1)
 
-    # Count occurrences of each status
+    # Prepare pie chart data
     status_counts = result['final_status'].value_counts()
-            
-    # Plot the pie chart
-    fig, ax = plt.subplots(figsize=(8, 6))
-    ax.pie(status_counts, labels=status_counts.index, autopct='%1.1f%%', colors=['#66c2a5', '#fc8d62'])
-    ax.set_title('Status Distribution')
-            
-    st.pyplot(fig)  # Display the pie chart in Streamlit
 
-    if 'BPS' in result.columns and 'final_status' in result.columns:
+    # Create two columns for layout
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # Plot the pie chart
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.pie(status_counts, labels=status_counts.index, autopct='%1.1f%%', colors=['#66c2a5', '#fc8d62'])
+        ax.set_title('Status Distribution')
+        st.pyplot(fig)  # Display the pie chart in Streamlit
+
+    with col2:
+        if 'BPS' in result.columns and 'final_status' in result.columns:
             # Filter DataFrame for rows where final_status is 'Tidak Sesuai'
             filtered_result = result[result['final_status'] == 'Tidak Sesuai']
             
@@ -185,6 +189,7 @@ if spm_file is not None:
             bps_counts = filtered_result['BPS'].value_counts()
             # Sort counts in ascending order
             bps_counts = bps_counts.sort_values(ascending=True)
+            
             # Plot the horizontal bar chart
             fig, ax = plt.subplots(figsize=(12, 8))
             bps_counts.plot(kind='barh', color='skyblue', ax=ax)
@@ -194,6 +199,9 @@ if spm_file is not None:
             ax.grid(axis='x', linestyle='--', alpha=0.7)
             
             st.pyplot(fig)  # Display the horizontal bar chart in Streamlit
+
+if __name__ == "__main__":
+    main()
     
     # Prepare download
     st.dataframe(result)
