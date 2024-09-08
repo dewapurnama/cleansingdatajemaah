@@ -73,6 +73,7 @@ if spm_file is not None:
     df_spm.loc[:, 'no_porsi'] = df_spm['no_porsi'].apply(lambda x: f'0{x}' if len(str(x)) == 9 else str(x))
     df_spm.loc[:, 'no_rekening'] = df_spm['no_rekening'].apply(modify_value)
     df_spm.loc[:, 'no_validasi'] = df_spm['no_validasi'].apply(modify_value)
+    df_spm.loc['no_porsi'] = df_spm['no_porsi'].apply(modify_value)
 
     # Calculate the sum of nilai_mutasi for C and D
     grouped = filtered_df_brj.groupby('parsing_deskripsi', as_index=False, group_keys=False).apply(
@@ -96,31 +97,6 @@ if spm_file is not None:
     # Concatenate and drop duplicates
     concatenated_df = pd.concat([merged_df1, merged_df2, merged_df3, merged_df4, merged_df5, merged_df6], ignore_index=True)
     result = concatenated_df.drop_duplicates(subset='id_brj', keep='first')
-
-    # Perform outer merges to find unmatched rows
-    merged_df7 = filtered_df_brj.merge(df_spm, left_on='nomrek_lawan_asli_updated', right_on='no_porsi', how='outer', indicator=True)
-    df_spm_not_in_filtered_df_brj1 = merged_df7[merged_df7['_merge'] == 'right_only'].drop(columns=['_merge'])
-
-    merged_df8 = filtered_df_brj.merge(df_spm, left_on='nomrek_lawan_asli_updated', right_on='no_validasi', how='outer', indicator=True)
-    df_spm_not_in_filtered_df_brj2 = merged_df8[merged_df8['_merge'] == 'right_only'].drop(columns=['_merge'])
-
-    merged_df9 = filtered_df_brj.merge(df_spm, left_on='nomrek_lawan_asli_updated', right_on='no_rekening', how='outer', indicator=True)
-    df_spm_not_in_filtered_df_brj3 = merged_df9[merged_df9['_merge'] == 'right_only'].drop(columns=['_merge'])
-
-    merged_df10 = filtered_df_brj.merge(df_spm, left_on='parsing_deskripsi', right_on='no_validasi', how='outer', indicator=True)
-    df_spm_not_in_filtered_df_brj4 = merged_df10[merged_df10['_merge'] == 'right_only'].drop(columns=['_merge'])
-
-    merged_df11 = filtered_df_brj.merge(df_spm, left_on='parsing_deskripsi', right_on='no_porsi', how='outer', indicator=True)
-    df_spm_not_in_filtered_df_brj5 = merged_df11[merged_df11['_merge'] == 'right_only'].drop(columns=['_merge'])
-
-    merged_df12 = filtered_df_brj.merge(df_spm, left_on='nomrek_lawan_asli_updated', right_on='no_rekening', how='outer', indicator=True)
-    df_spm_not_in_filtered_df_brj6 = merged_df12[merged_df12['_merge'] == 'right_only'].drop(columns=['_merge'])
-
-    # Concatenate unmatched rows
-    concatenated_df2 = pd.concat([df_spm_not_in_filtered_df_brj1, df_spm_not_in_filtered_df_brj2, 
-                                  df_spm_not_in_filtered_df_brj3, df_spm_not_in_filtered_df_brj4, 
-                                  df_spm_not_in_filtered_df_brj5, df_spm_not_in_filtered_df_brj6], ignore_index=True)
-    result2 = concatenated_df2.drop_duplicates(subset=['tanggal_SPM', 'no_SPM', 'nama_jamaah'], keep='first')
 
     # Prepare download
     buffer = io.BytesIO()
