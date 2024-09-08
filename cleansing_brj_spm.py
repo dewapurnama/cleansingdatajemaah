@@ -193,9 +193,9 @@ if spm_file is not None:
             # Plot the horizontal bar chart
             fig, ax = plt.subplots(figsize=(10, 11))
             bps_counts.plot(kind='barh', color='skyblue', ax=ax)
-            ax.set_title('Sebaran Anomali Data per BPS')
-            ax.set_xlabel('Count')
-            ax.set_ylabel('BPS')
+            ax.set_title('Sebaran Anomali Data per BPS', fontsize=20)
+            ax.set_xlabel('Jumlah', fontsize=16)
+            ax.set_ylabel('BPS', fontsize=16)
             ax.grid(axis='x', linestyle='--', alpha=0.7)
             
             st.pyplot(fig)  # Display the horizontal bar chart in Streamlit
