@@ -114,6 +114,19 @@ if spm_file is not None:
     result = result[cols]
     # Apply the function to the column
     result['parsing_nomrek_lawan'] = result['parsing_nomrek_lawan'].apply(modify_value)
+
+    # Define the function to determine porsi_status
+    def determine_status(row):
+        if row['parsing_nomrek_lawan'] in [row['no_rekening'], row['no_validasi'], row['no_porsi']]:
+            return 'MATCH'
+        else:
+            return 'CHECK'
+    
+    # Create the 'porsi_status' column
+    result['porsi_status'] = result.apply(determine_status, axis=1)
+    # Determine the final status
+    result['final_status'] = result.apply(lambda row: 'Sesuai' if row['nominal_status'] == 'MATCH' and row['porsi_status'] == 'MATCH' else 'Tidak Sesuai', axis=1)
+            
     def generate_saran_perbaikan(row):
         # Convert 'nan' strings to actual NaN values for easier handling
         no_porsi = row['no_porsi'] if row['no_porsi'] != 'nan' else None
