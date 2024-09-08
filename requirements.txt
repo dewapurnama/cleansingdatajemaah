@@ -4,3 +4,4 @@ regex
 numpy
 xlsxwriter
 openpyxl
+matplotlib
