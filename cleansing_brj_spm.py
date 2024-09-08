@@ -167,11 +167,15 @@ if spm_file is not None:
     # Apply the function to generate saran_perbaikan
     result['saran_perbaikan'] = result.apply(generate_saran_perbaikan, axis=1)
 
-    fig1 = plt.figure(figsize=(10,7))
-    labels = ["Sesuai", "Tidak Sesuai"]
-    sizes = [result["final_status"].nunique(), (len(a)-result["final_status"].nunique())]
-    plt.pie(sizes, labels = labels, autopct='%1.1f%%')
-    st.pyplot(fig1)
+    # Count occurrences of each status
+    status_counts = result['final_status'].value_counts()
+            
+    # Plot the pie chart
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.pie(status_counts, labels=status_counts.index, autopct='%1.1f%%', colors=['#66c2a5', '#fc8d62'])
+    ax.set_title('Status Distribution')
+            
+    st.pyplot(fig)  # Display the pie chart in Streamlit
     
     # Prepare download
     st.dataframe(result)
