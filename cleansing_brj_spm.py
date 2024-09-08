@@ -199,9 +199,6 @@ if spm_file is not None:
             ax.grid(axis='x', linestyle='--', alpha=0.7)
             
             st.pyplot(fig)  # Display the horizontal bar chart in Streamlit
-
-if __name__ == "__main__":
-    main()
     
     # Prepare download
     st.dataframe(result)
