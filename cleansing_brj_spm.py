@@ -196,7 +196,10 @@ if spm_file is not None:
             ax.set_title('Sebaran Anomali Data per BPS', fontsize=20)
             ax.set_xlabel('Jumlah', fontsize=16)
             ax.set_ylabel('BPS', fontsize=16)
-            x.tick_params(axis='both', labelsize=16)  # Set tick label font size
+            # Adjust the font size of bar labels
+            for label in ax.get_yticklabels():
+                label.set_fontsize(16)  # Change 12 to your desired font size
+
             ax.grid(axis='x', linestyle='--', alpha=0.7)
             
             st.pyplot(fig)  # Display the horizontal bar chart in Streamlit
