@@ -191,7 +191,7 @@ if spm_file is not None:
             bps_counts = bps_counts.sort_values(ascending=True)
             
             # Plot the horizontal bar chart
-            fig, ax = plt.subplots(figsize=(12, 8))
+            fig, ax = plt.subplots(figsize=(8, 12))
             bps_counts.plot(kind='barh', color='skyblue', ax=ax)
             ax.set_title('BPS Distribution for Tidak Sesuai')
             ax.set_xlabel('Count')
