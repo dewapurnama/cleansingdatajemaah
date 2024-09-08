@@ -176,6 +176,23 @@ if spm_file is not None:
     ax.set_title('Status Distribution')
             
     st.pyplot(fig)  # Display the pie chart in Streamlit
+
+    if 'BPS' in result.columns and 'final_status' in result.columns:
+            # Filter DataFrame for rows where final_status is 'Tidak Sesuai'
+            filtered_result = result[result['final_status'] == 'Tidak Sesuai']
+            
+            # Count occurrences of each unique value in the BPS column
+            bps_counts = fitlered_result['BPS'].value_counts()
+            
+            # Plot the horizontal bar chart
+            fig, ax = plt.subplots(figsize=(12, 8))
+            bps_counts.plot(kind='barh', color='skyblue', ax=ax)
+            ax.set_title('BPS Distribution for Tidak Sesuai')
+            ax.set_xlabel('Count')
+            ax.set_ylabel('BPS')
+            ax.grid(axis='x', linestyle='--', alpha=0.7)
+            
+            st.pyplot(fig)  # Display the horizontal bar chart in Streamlit
     
     # Prepare download
     st.dataframe(result)
