@@ -3,6 +3,7 @@ import pandas as pd
 import regex as re
 import numpy as np
 import io
+import matplotlib.pyplot as plt
 
 # Title of the app
 st.title('Cleansing Data Transaksi Jemaah')
@@ -144,12 +145,7 @@ if spm_file is not None:
             if pd.notna(row['nama_jamaah_SPM']):
                 return "perlu pengecekan manual"
             else:
-                if no_porsi is not None:
-                    return f"nomor_rekening_lawan diupdate dengan {no_porsi} pada id_brj {row['id_brj']}"
-                elif no_rekening is not None:
-                    return f"nomor_rekening_lawan diupdate dengan {no_rekening} pada id_brj {row['id_brj']}"
-                else:
-                    return "tidak ada SPM-nya"
+                return "tidak ada SPM-nya"
         
         if row['nominal_status'] == 'CHECK':
             difference = row['total_mutasi'] - row['nilai_mutasi']
@@ -171,6 +167,12 @@ if spm_file is not None:
     # Apply the function to generate saran_perbaikan
     result['saran_perbaikan'] = result.apply(generate_saran_perbaikan, axis=1)
 
+    fig1 = plt.figure(figsize=(10,7))
+    labels = ["Sesuai", "Tidak Sesuai"]
+    sizes = [result["final_status"].nunique(), (len(a)-result["final_status"].nunique())]
+    plt.pie(sizes, labels = labels, autopct='%1.1f%%')
+    st.pyplot(fig1)
+    
     # Prepare download
     st.dataframe(result)
     buffer = io.BytesIO()
