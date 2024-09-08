@@ -182,7 +182,7 @@ if spm_file is not None:
             filtered_result = result[result['final_status'] == 'Tidak Sesuai']
             
             # Count occurrences of each unique value in the BPS column
-            bps_counts = fitered_result['BPS'].value_counts()
+            bps_counts = filtered_result['BPS'].value_counts()
             
             # Plot the horizontal bar chart
             fig, ax = plt.subplots(figsize=(12, 8))
