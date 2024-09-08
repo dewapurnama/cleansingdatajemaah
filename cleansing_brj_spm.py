@@ -65,7 +65,7 @@ if brj_file is not None:
 # Upload SPM file
 spm_file = st.file_uploader("Upload File SPM disini", type=['xls', 'xlsx'])
 if spm_file is not None:
-    df_spm = pd.read_excel(spm_file)
+    df_spm = pd.read_excel(spm_file, dtype=str)
     st.write(f"Menampilkan {min(len(df_spm), 100)} baris pertama dari total {len(df_spm)} baris.")
     st.dataframe(df_spm.head(100))
 
