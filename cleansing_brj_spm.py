@@ -98,6 +98,61 @@ if spm_file is not None:
     concatenated_df = pd.concat([merged_df1, merged_df2, merged_df3, merged_df4, merged_df5, merged_df6], ignore_index=True)
     result = concatenated_df.drop_duplicates(subset='id_brj', keep='first')
 
+    # Ensure df is a copy if it's a slice of another DataFrame
+    result = result.copy()
+
+    # Create the new column 'nominal_status' based on the comparison using .loc
+    result.loc[:, 'nominal_status'] = result.apply(
+        lambda row: 'MATCH' if row['total_mutasi'] == row['total_nominal'] else 'CHECK',
+        axis=1
+    )
+
+    # Extract the number after the period using regex
+    result['parsing_nomrek_lawan'] = result['nomor_rekening_lawan'].str.extract(r'\.(\d+)')
+    cols = result.columns.tolist()
+    cols.insert(11, cols.pop(cols.index('parsing_nomrek_lawan')))
+    result = result[cols]
+    # Apply the function to the column
+    result['parsing_nomrek_lawan'] = result['parsing_nomrek_lawan'].apply(modify_value)
+    def generate_saran_perbaikan(row):
+        # Convert 'nan' strings to actual NaN values for easier handling
+        no_porsi = row['no_porsi'] if row['no_porsi'] != 'nan' else None
+        no_rekening = row['no_rekening'] if row['no_rekening'] != 'nan' else None
+    
+        if row['final_status'] == 'Sesuai':
+            return "tidak perlu perbaikan"
+        
+        if row['nominal_status'] == 'CHECK' and row['porsi_status'] == 'CHECK':
+            if pd.notna(row['nama_jamaah_SPM']):
+                return "perlu pengecekan manual"
+            else:
+                if no_porsi is not None:
+                    return f"nomor_rekening_lawan diupdate dengan {no_porsi} pada id_brj {row['id_brj']}"
+                elif no_rekening is not None:
+                    return f"nomor_rekening_lawan diupdate dengan {no_rekening} pada id_brj {row['id_brj']}"
+                else:
+                    return "tidak ada SPM-nya"
+        
+        if row['nominal_status'] == 'CHECK':
+            difference = row['total_mutasi'] - row['nilai_mutasi']
+            if difference < 0:
+                return f"retur sebesar {abs(difference)}"
+            else:
+                return f"selisih sebesar {difference} tidak ada pada SPM"
+        
+        if row['porsi_status'] == 'CHECK':
+            if no_porsi is not None:
+                return f"nomor_rekening_lawan diupdate dengan {no_porsi} pada id_brj {row['id_brj']}"
+            elif no_rekening is not None:
+                return f"nomor_rekening_lawan diupdate dengan {no_rekening} pada id_brj {row['id_brj']}"
+            else:
+                return "perlu pengecekan manual"
+        
+        return "perlu pengecekan manual"
+
+    # Apply the function to generate saran_perbaikan
+    result['saran_perbaikan'] = result.apply(generate_saran_perbaikan, axis=1)
+
     # Prepare download
     buffer = io.BytesIO()
     with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
