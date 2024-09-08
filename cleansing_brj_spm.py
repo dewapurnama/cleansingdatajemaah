@@ -10,7 +10,7 @@ st.title('Cleansing Data Transaksi Jemaah')
 # Upload BRJ file
 brj_file = st.file_uploader("Upload File BRJ disini", type=['xls', 'xlsx'])
 if brj_file is not None:
-    df_brj = pd.read_excel(brj_file, dtype=str)
+    df_brj = pd.read_excel(brj_file)
     
     st.write(f"Menampilkan {min(len(df_brj), 100)} baris pertama dari total {len(df_brj)} baris.")
     st.dataframe(df_brj.head(100))
@@ -65,7 +65,12 @@ if brj_file is not None:
 # Upload SPM file
 spm_file = st.file_uploader("Upload File SPM disini", type=['xls', 'xlsx'])
 if spm_file is not None:
-    df_spm = pd.read_excel(spm_file, dtype=str)
+    dtype_spec = {
+        'no_rekening': str,
+        'no_validasi': str,
+        'no_porsi': str
+    }
+    df_spm = pd.read_excel(spm_file, dtype=dtype_spec)
     st.write(f"Menampilkan {min(len(df_spm), 100)} baris pertama dari total {len(df_spm)} baris.")
     st.dataframe(df_spm.head(100))
 
