@@ -167,6 +167,7 @@ if spm_file is not None:
     result['saran_perbaikan'] = result.apply(generate_saran_perbaikan, axis=1)
 
     # Prepare download
+    st.dataframe(result)
     buffer = io.BytesIO()
     with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
         result.to_excel(writer, sheet_name='Sheet1', index=False)
