@@ -183,7 +183,8 @@ if spm_file is not None:
             
             # Count occurrences of each unique value in the BPS column
             bps_counts = filtered_result['BPS'].value_counts()
-            
+            # Sort counts in ascending order
+            bps_counts = bps_counts.sort_values(ascending=True)
             # Plot the horizontal bar chart
             fig, ax = plt.subplots(figsize=(12, 8))
             bps_counts.plot(kind='barh', color='skyblue', ax=ax)
