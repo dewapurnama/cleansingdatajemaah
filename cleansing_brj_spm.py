@@ -177,7 +177,7 @@ if spm_file is not None:
         # Plot the pie chart
         fig, ax = plt.subplots(figsize=(8, 6))
         ax.pie(status_counts, labels=status_counts.index, autopct='%1.1f%%', colors=['#66c2a5', '#fc8d62'])
-        ax.set_title('Status Distribution')
+        ax.set_title('Kesesuaian antara BRJ dan SPM')
         st.pyplot(fig)  # Display the pie chart in Streamlit
 
     with col2:
@@ -191,9 +191,9 @@ if spm_file is not None:
             bps_counts = bps_counts.sort_values(ascending=True)
             
             # Plot the horizontal bar chart
-            fig, ax = plt.subplots(figsize=(10, 12))
+            fig, ax = plt.subplots(figsize=(10, 11))
             bps_counts.plot(kind='barh', color='skyblue', ax=ax)
-            ax.set_title('BPS Distribution for Tidak Sesuai')
+            ax.set_title('Sebaran Anomali Data per BPS')
             ax.set_xlabel('Count')
             ax.set_ylabel('BPS')
             ax.grid(axis='x', linestyle='--', alpha=0.7)
