@@ -235,7 +235,60 @@ elif option == "Setoral Awal":
     # Add the code specific for "Setoral Awal"
     # You can adapt and reuse parts of the "Pembatalan" logic if necessary
 
-    # ...
+    # Upload BRJ file
+    brj_file = st.file_uploader("Upload File BRJ disini", type=['xls', 'xlsx'])
+    if brj_file is not None:
+        df_brj = pd.read_excel(brj_file)
+        
+        st.write(f"Menampilkan {min(len(df_brj), 100)} baris pertama dari total {len(df_brj)} baris.")
+        st.dataframe(df_brj.head(100))
+        
+        # Define extraction function
+        def extract_number(text):
+            text = str(text)
+            matches = re.findall(r'\d{9,}', text)
+            return min(matches, key=len) if matches else None
+    
+        # Apply the function using .loc to avoid warnings
+        df_brj.loc[:, 'parsing_deskripsi'] = df_brj['description'].apply(extract_number)
+    
+        # Add '0' in front if the number has 9 digits
+        df_brj.loc[:, 'parsing_deskripsi'] = df_brj['parsing_deskripsi'].apply(lambda x: f'0{x}' if len(str(x)) == 9 else str(x))
+        
+        # Add '0' in front if the number has 9 digits
+        df_brj.loc[:, 'nomrek_lawan_asli_updated'] = df_brj['nomrek_lawan_asli'].apply(lambda x: f'0{x}' if len(str(x)) == 9 else str(x))
+    
+        def modify_value(val):
+        # Convert to string to handle leading zeros
+            val_str = str(val)
+        
+        # Check if the value has more than 10 digits and begins with '0'
+            if len(val_str) > 10 and val_str.startswith('0'):
+                # Strip leading zeros and ensure it's 10 digits long
+                stripped_val = val_str.lstrip('0')
+                # If stripping leaves it with fewer than 10 digits, add leading zeros
+                if len(stripped_val) <= 10:
+                    return stripped_val.zfill(10)
+                else:
+                    return stripped_val
+            else:
+                return val_str
+    
+    
+        df_brj.loc[:, 'parsing_deskripsi'] = df_brj['parsing_deskripsi'].apply(modify_value)
+    
+        # Filter DataFrame
+        filtered_df_brj = df_brj[df_brj['tx_code'].isin(['BTAW', 'BTVL', 'BTLN', 'KMLN', 'KMNM', 'MEB', 'PK'])]
+    
+        # Ensure columns are strings
+        filtered_df_brj.loc[:, 'parsing_deskripsi'] = filtered_df_brj['parsing_deskripsi'].astype(str)
+        filtered_df_brj.loc[:, 'nomrek_lawan_asli_updated'] = filtered_df_brj['nomrek_lawan_asli_updated'].astype(str)
+    
+        # Replace 'None' with NaN
+        filtered_df_brj.loc[:, 'parsing_deskripsi'] = filtered_df_brj['parsing_deskripsi'].replace('None', np.nan)
+    
+        # Fill NaN values
+        filtered_df_brj.loc[:, 'parsing_deskripsi'] = filtered_df_brj['parsing_deskripsi'].fillna(filtered_df_brj['nomrek_lawan_asli_updated'])
 
 # Code for "Setoran Lunas"
 elif option == "Setoran Lunas":
