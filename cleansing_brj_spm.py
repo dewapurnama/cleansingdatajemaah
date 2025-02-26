@@ -290,6 +290,34 @@ elif option == "Setoral Awal":
         # Fill NaN values
         filtered_df_brj.loc[:, 'parsing_deskripsi'] = filtered_df_brj['parsing_deskripsi'].fillna(filtered_df_brj['nomrek_lawan_asli_updated'])
 
+    # Upload SPM file
+    skh_file = st.file_uploader("Upload File SISKOHAT disini", type=['xls', 'xlsx'])
+    if skh_file is not None:
+        dtype_spec = {
+            'no_rekening': str,
+            'no_validasi': str,
+            'no_porsi': str
+        }
+        df_skh = pd.read_excel(skh_file, dtype=dtype_spec)
+        st.write(f"Menampilkan {min(len(df_skh), 100)} baris pertama dari total {len(df_skh)} baris.")
+        st.dataframe(df_skh.head(100))
+
+        # Apply the function to the columns
+        df_skh.loc[:, 'portion'] = df_spm['portion'].apply(lambda x: f'0{x}' if len(str(x)) == 9 else str(x))
+        df_skh.loc[:, 'validation'] = df_spm['validation'].apply(modify_value)
+        df_spm.loc[:, 'portion'] = df_spm['portion'].apply(modify_value)
+
+        # Calculate the sum of nilai_mutasi for C and D
+        grouped = filtered_df_brj.groupby('parsing_deskripsi', as_index=False, group_keys=False).apply(
+        lambda x: pd.Series({
+            'sum_C': x.loc[x['jenis_mutasi'] == 'C', 'nilai_mutasi'].sum(),
+            'sum_D': x.loc[x['jenis_mutasi'] == 'D', 'nilai_mutasi'].sum()
+        })).reset_index()
+    
+        filtered_df_brj = filtered_df_brj.merge(grouped, on='parsing_deskripsi')
+        filtered_df_brj['total_mutasi'] = (filtered_df_brj['sum_C'] - filtered_df_brj['sum_D']).abs()
+        filtered_df_brj.drop(['sum_C', 'sum_D'], axis=1, inplace=True)
+        
 # Code for "Setoran Lunas"
 elif option == "Setoran Lunas":
     st.subheader("Transaksi Setoran Lunas")
