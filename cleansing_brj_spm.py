@@ -11,7 +11,7 @@ st.title('Cleansing Data Transaksi Jemaah')
 # Sidebar for selecting options
 option = st.sidebar.selectbox(
     "Pilih Jenis Transaksi",
-    ("Pembatalan", "Setoral Awal", "Setoran Lunas")
+    ("Pembatalan", "Setoral Awal")
 )
 
 # Code for "Pembatalan" (default option)
@@ -319,8 +319,8 @@ elif option == "Setoral Awal":
         filtered_df_brj.drop(['sum_C', 'sum_D'], axis=1, inplace=True)
         
 # Code for "Setoran Lunas"
-elif option == "Setoran Lunas":
-    st.subheader("Transaksi Setoran Lunas")
+#elif option == "Setoran Lunas":
+    #st.subheader("Transaksi Setoran Lunas")
     
     # Add the code specific for "Setoran Lunas"
     # You can adapt and reuse parts of the "Pembatalan" logic if necessary
