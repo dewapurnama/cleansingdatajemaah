@@ -236,7 +236,7 @@ elif option == "Setoral Awal":
     # You can adapt and reuse parts of the "Pembatalan" logic if necessary
 
     # Upload BRJ file
-    brj_file = st.file_uploader("Upload File SISKOHAT disini", type=['xls', 'xlsx'])
+    brj_file = st.file_uploader("Upload File SISKO disini", type=['xls', 'xlsx'])
     if brj_file is not None:
         df_brj = pd.read_excel(brj_file)
         
