@@ -409,7 +409,7 @@ elif option == "Setoral Awal":
             st.pyplot(fig)  # Display the pie chart in Streamlit
     
         with col2:
-            if 'BPS' in result.columns and 'final_status' in result.columns:
+            if 'bank' in result.columns and 'final_status' in result.columns:
                 # Filter DataFrame for rows where final_status is 'Tidak Sesuai'
                 filtered_result = result[result['final_status'] == 'Tidak Sesuai']
                 
