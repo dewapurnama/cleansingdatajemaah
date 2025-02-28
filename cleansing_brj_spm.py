@@ -359,6 +359,8 @@ elif option == "Setoral Awal":
                 return 'CHECK'
         # Create the 'porsi_status' column
         result['porsi_status'] = result.apply(determine_status, axis=1)
+        # Determine the final status
+        result['final_status'] = result.apply(lambda row: 'Sesuai' if row['nominal_status'] == 'MATCH' and row['porsi_status'] == 'MATCH' else 'Tidak Sesuai', axis=1)
 
         def generate_saran_perbaikan(row):
             # Convert 'nan' strings to actual NaN values for easier handling
