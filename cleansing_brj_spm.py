@@ -448,13 +448,6 @@ elif option == "Setoral Awal":
             mime='application/vnd.ms-excel'
         )
         
-        # Prepare download
-        st.dataframe(result)
-        buffer = io.BytesIO()
-        with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-            result.to_excel(writer, sheet_name='Sheet1', index=False)
-            writer.close()
-            
 # Code for "Setoran Lunas"
 #elif option == "Setoran Lunas":
     #st.subheader("Transaksi Setoran Lunas")
