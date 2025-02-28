@@ -294,9 +294,8 @@ elif option == "Setoral Awal":
     skh_file = st.file_uploader("Upload File SISKOHAT disini", type=['xls', 'xlsx'])
     if skh_file is not None:
         dtype_spec = {
-            'no_rekening': str,
-            'no_validasi': str,
-            'no_porsi': str
+            'validation': str,
+            'portion': str,
         }
         df_skh = pd.read_excel(skh_file, dtype=dtype_spec)
         st.write(f"Menampilkan {min(len(df_skh), 100)} baris pertama dari total {len(df_skh)} baris.")
