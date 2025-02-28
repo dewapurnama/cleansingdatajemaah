@@ -337,7 +337,7 @@ elif option == "Setoral Awal":
         
         # Create the new column 'nominal_status' based on the comparison using .loc
         result.loc[:, 'nominal_status'] = result.apply(
-            lambda row: 'MATCH' if row['total_mutasi'] == row['depositUsd'] else 'CHECK',
+            lambda row: 'MATCH' if row['total_mutasi'] in [row['depositUsd'], row['depositIdr']] else 'CHECK',
             axis=1
         )
 
