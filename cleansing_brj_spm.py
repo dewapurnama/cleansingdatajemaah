@@ -414,7 +414,7 @@ elif option == "Setoral Awal":
                 filtered_result = result[result['final_status'] == 'Tidak Sesuai']
                 
                 # Count occurrences of each unique value in the BPS column
-                bps_counts = filtered_result['BPS'].value_counts()
+                bps_counts = filtered_result['bank'].value_counts()
                 # Sort counts in ascending order
                 bps_counts = bps_counts.sort_values(ascending=True)
                 
