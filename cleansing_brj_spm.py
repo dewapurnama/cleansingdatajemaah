@@ -305,7 +305,7 @@ elif option == "Setoral Awal":
         # Apply the function to the columns
         df_skh.loc[:, 'portion'] = df_skh['portion'].apply(lambda x: f'0{x}' if len(str(x)) == 9 else str(x))
         df_skh.loc[:, 'validation'] = df_skh['validation'].apply(modify_value)
-        df_spm.loc[:, 'portion'] = df_skh['portion'].apply(modify_value)
+        df_skh.loc[:, 'portion'] = df_skh['portion'].apply(modify_value)
 
         # Calculate the sum of nilai_mutasi for C and D
         grouped = filtered_df_brj.groupby('parsing_deskripsi', as_index=False, group_keys=False).apply(
